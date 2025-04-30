@@ -1,0 +1,18 @@
+{
+    "name": "ihorrud/counter",
+    "description": "Counter that counts your countable habits and motivates you",
+    "type": "project",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Ihorrud\\Counter\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Ihor Rud",
+            "email": "ihor.rud@onix-systems.com"
+        }
+    ],
+    "require": {}
+}
