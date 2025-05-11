@@ -5,7 +5,8 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Ihorrud\\Counter\\": "src/"
+            "Ihorrud\\Counter\\": "src/",
+            "Tests\\": "tests/"
         }
     },
     "authors": [
@@ -14,5 +15,23 @@
             "email": "ihor.rud@onix-systems.com"
         }
     ],
-    "require": {}
+    "scripts": {
+        "lint:fix": "./vendor/bin/php-cs-fixer fix src/",
+        "phpstan": "./vendor/bin/phpstan analyse src"
+    },
+    "require-dev": {
+        "phpstan/phpstan": "^2.1",
+        "friendsofphp/php-cs-fixer": "^3.75",
+        "symfony/var-dumper": "^7.2",
+        "phpunit/phpunit": "^11.5"
+    },
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    },
+    "require": {
+        "webmozart/assert": "^1.11",
+        "bramus/ansi-php": "^3.1"
+    }
 }
