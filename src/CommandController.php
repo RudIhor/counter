@@ -14,6 +14,7 @@ use Ihorrud\Counter\Services\Output\StdOutputService;
 use Ihorrud\Counter\Services\Statistics\AllTimeCountByTime;
 use Ihorrud\Counter\Services\Statistics\LastMonthCountByTime;
 use Ihorrud\Counter\Services\Statistics\LastWeekCountByTime;
+use Ihorrud\Counter\Services\Statistics\ThisMonthCountByTime;
 use Ihorrud\Counter\Services\Statistics\TodayCountByTime;
 use Ihorrud\Counter\ValueObjects\Tag;
 use Ihorrud\Counter\Writers\JsonWriter;
@@ -53,6 +54,7 @@ class CommandController
         $statistics = $this->getStatisticsService->handle(Tag::fromString($commandInputDTO->tag), [
             TodayCountByTime::create(),
             LastWeekCountByTime::create(),
+            ThisMonthCountByTime::create(),
             LastMonthCountByTime::create(),
             AllTimeCountByTime::create(),
         ]);

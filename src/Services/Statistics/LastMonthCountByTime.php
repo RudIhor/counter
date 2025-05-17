@@ -26,7 +26,7 @@ final class LastMonthCountByTime implements CountByTime
     public function getCount(array $logs): int
     {
         $result = 0;
-        while ($this->date < new DateTimeImmutable()) {
+        while ($this->date < new DateTimeImmutable('first day of this month')) {
             $result += $logs[$this->date->format('Y-m-d')] ?? 0;
             $this->date = $this->date->modify('+1 day');
         }
