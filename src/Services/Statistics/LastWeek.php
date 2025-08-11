@@ -7,9 +7,9 @@ namespace Ihorrud\Counter\Services\Statistics;
 use DateTimeImmutable;
 use Ihorrud\Counter\Contracts\CountByTime;
 
-final class ThisMonthCountByTime implements CountByTime
+final class LastWeek implements CountByTime
 {
-    private const string FORMAT = 'first day of this month';
+    private const string FORMAT = 'last week';
 
     private DateTimeImmutable $date;
 
@@ -18,15 +18,15 @@ final class ThisMonthCountByTime implements CountByTime
         $this->date = new DateTimeImmutable(self::FORMAT);
     }
 
-    public static function create(): ThisMonthCountByTime
+    public static function create(): LastWeek
     {
-        return new ThisMonthCountByTime();
+        return new LastWeek();
     }
 
     public function getCount(array $logs): int
     {
         $result = 0;
-        while ($this->date < new DateTimeImmutable()) {
+        while ($this->date < new DateTimeImmutable('last monday')) {
             $result += $logs[$this->date->format('Y-m-d')] ?? 0;
             $this->date = $this->date->modify('+1 day');
         }
@@ -36,6 +36,6 @@ final class ThisMonthCountByTime implements CountByTime
 
     public function getHumanReadableDate(): string
     {
-        return 'This month';
+        return 'Last week';
     }
 }

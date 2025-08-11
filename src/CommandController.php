@@ -11,11 +11,12 @@ use Ihorrud\Counter\Services\GetLogsDataFileService;
 use Ihorrud\Counter\Services\GetStatisticsService;
 use Ihorrud\Counter\Services\LogCountService;
 use Ihorrud\Counter\Services\Output\StdOutputService;
-use Ihorrud\Counter\Services\Statistics\AllTimeCountByTime;
-use Ihorrud\Counter\Services\Statistics\LastMonthCountByTime;
-use Ihorrud\Counter\Services\Statistics\LastWeekCountByTime;
-use Ihorrud\Counter\Services\Statistics\ThisMonthCountByTime;
-use Ihorrud\Counter\Services\Statistics\TodayCountByTime;
+use Ihorrud\Counter\Services\Statistics\AllTime;
+use Ihorrud\Counter\Services\Statistics\LastMonth;
+use Ihorrud\Counter\Services\Statistics\LastWeek;
+use Ihorrud\Counter\Services\Statistics\ThisMonth;
+use Ihorrud\Counter\Services\Statistics\ThisWeek;
+use Ihorrud\Counter\Services\Statistics\Today;
 use Ihorrud\Counter\ValueObjects\Tag;
 use Ihorrud\Counter\Writers\JsonWriter;
 
@@ -52,11 +53,12 @@ class CommandController
         $this->logCountService->handle($commandInputDTO);
 
         $statistics = $this->getStatisticsService->handle(Tag::fromString($commandInputDTO->tag), [
-            TodayCountByTime::create(),
-            LastWeekCountByTime::create(),
-            ThisMonthCountByTime::create(),
-            LastMonthCountByTime::create(),
-            AllTimeCountByTime::create(),
+            Today::create(),
+            ThisWeek::create(),
+            LastWeek::create(),
+            ThisMonth::create(),
+            LastMonth::create(),
+            AllTime::create(),
         ]);
 
         $this->outputService->printStatistics($statistics);
