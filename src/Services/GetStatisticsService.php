@@ -16,15 +16,15 @@ final readonly class GetStatisticsService
 
     /**
      * @param Tag $tag
-     * @param CountByTime[] $counts
+     * @param CountByTime[] $formats
      * @return array<string, int|string>
      */
-    public function handle(Tag $tag, array $counts): array
+    public function handle(Tag $tag, array $formats): array
     {
         $result = ['tag' => $tag->tag()];
 
-        foreach ($counts as $count) {
-            $result[$count->getHumanReadableDate()] = $count->getCount($this->service->getLogsByTag($tag));
+        foreach ($formats as $format) {
+            $result[$format->getHumanReadableDate()] = $format->getCount($this->service->getLogsByTag($tag));
         }
 
         return $result;

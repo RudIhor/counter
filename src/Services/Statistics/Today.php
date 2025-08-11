@@ -7,7 +7,7 @@ namespace Ihorrud\Counter\Services\Statistics;
 use DateTimeImmutable;
 use Ihorrud\Counter\Contracts\CountByTime;
 
-final class TodayCountByTime implements CountByTime
+final class Today implements CountByTime
 {
     private const string FORMAT = 'today';
 
@@ -18,9 +18,9 @@ final class TodayCountByTime implements CountByTime
         $this->date = new DateTimeImmutable(self::FORMAT);
     }
 
-    public static function create(): TodayCountByTime
+    public static function create(): Today
     {
-        return new TodayCountByTime();
+        return new Today();
     }
 
     public function getCount(array $logs): int

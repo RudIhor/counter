@@ -7,15 +7,15 @@ namespace Ihorrud\Counter\Services\Statistics;
 use DateTimeImmutable;
 use Ihorrud\Counter\Contracts\CountByTime;
 
-final class AllTimeCountByTime implements CountByTime
+final class AllTime implements CountByTime
 {
     private function __construct()
     {
     }
 
-    public static function create(): AllTimeCountByTime
+    public static function create(): AllTime
     {
-        return new AllTimeCountByTime();
+        return new AllTime();
     }
 
     public function getCount(array $logs): int
