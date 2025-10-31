@@ -23,12 +23,15 @@ final class ThisWeek implements CountByTime
 
     public function getCount(array $logs): int
     {
+        // Set end date once
+        $endDate = new DateTimeImmutable('+1 day');
+        
         // Check if this is time data
         if (isset($logs['time']) && is_array($logs['time'])) {
             $timeLogs = $logs['time'];
             $result = 0;
             $date = clone $this->date;
-            while ($date < new DateTimeImmutable('+1 day')) {
+            while ($date < $endDate) {
                 $result += $timeLogs[$date->format('Y-m-d')] ?? 0;
                 $date = $date->modify('+1 day');
             }
@@ -37,7 +40,7 @@ final class ThisWeek implements CountByTime
 
         $result = 0;
         $date = clone $this->date;
-        while ($date < new DateTimeImmutable('+1 day')) {
+        while ($date < $endDate) {
             $result += $logs[$date->format('Y-m-d')] ?? 0;
             $date = $date->modify('+1 day');
         }

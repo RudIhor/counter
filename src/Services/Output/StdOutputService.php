@@ -38,20 +38,10 @@ final class StdOutputService implements PrintOutput
     {
         $tag = $data['tag'];
         unset($data['tag']);
-
-        // Check if we're displaying time data by looking at the data pattern
-        // Time data typically has consistent patterns (e.g., all values end in :XX or are larger than typical counts)
-        $isTimeData = false;
-        $valueCount = count($data);
-        if ($valueCount > 0) {
-            // Check if any value suggests time tracking (> 60 seconds is likely time, not count)
-            $maxValue = max($data);
-            // If max value is > 60, it's likely time in seconds
-            // Also check if we have multiple non-zero values that suggest time tracking
-            if ($maxValue > 60) {
-                $isTimeData = true;
-            }
-        }
+        
+        // Check if we're displaying time data using explicit metadata
+        $isTimeData = $data['_isTimeData'] ?? false;
+        unset($data['_isTimeData']);
 
         echo $this->ansi->bold()->text('Statistics:')->reset()->get() . PHP_EOL;
         echo '*-------------------------*' . PHP_EOL;
