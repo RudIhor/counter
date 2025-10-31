@@ -32,6 +32,6 @@
     },
     "require": {
         "webmozart/assert": "^1.11",
-        "bramus/ansi-php": "^3.1"
+        "bramus/ansi-php": "3.1"
     }
 }
