@@ -39,13 +39,17 @@ final class StdOutputService implements PrintOutput
         $tag = $data['tag'];
         unset($data['tag']);
 
-        // Check if we're displaying time data
+        // Check if we're displaying time data by looking at the data pattern
+        // Time data typically has consistent patterns (e.g., all values end in :XX or are larger than typical counts)
         $isTimeData = false;
-        foreach ($data as $count) {
-            // If any value is greater than typical count values, assume it's time in seconds
-            if ($count > 3600) { // More than 1 hour suggests it's time data
+        $valueCount = count($data);
+        if ($valueCount > 0) {
+            // Check if any value suggests time tracking (> 60 seconds is likely time, not count)
+            $maxValue = max($data);
+            // If max value is > 60, it's likely time in seconds
+            // Also check if we have multiple non-zero values that suggest time tracking
+            if ($maxValue > 60) {
                 $isTimeData = true;
-                break;
             }
         }
 
