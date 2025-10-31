@@ -39,15 +39,37 @@ final class StdOutputService implements PrintOutput
         $tag = $data['tag'];
         unset($data['tag']);
 
+        // Check if we're displaying time data
+        $isTimeData = false;
+        foreach ($data as $count) {
+            // If any value is greater than typical count values, assume it's time in seconds
+            if ($count > 3600) { // More than 1 hour suggests it's time data
+                $isTimeData = true;
+                break;
+            }
+        }
+
         echo $this->ansi->bold()->text('Statistics:')->reset()->get() . PHP_EOL;
         echo '*-------------------------*' . PHP_EOL;
         echo <<<EOF
                 {$this->ansi->bold()->text(strval($tag))->reset()->get()}
         EOF;
         foreach ($data as $date => $count) {
+            $displayValue = $count;
+            if ($isTimeData && $count > 0) {
+                // Format time as HH:MM:SS or MM:SS
+                $hours = floor($count / 3600);
+                $minutes = floor(($count % 3600) / 60);
+                $seconds = $count % 60;
+                if ($hours > 0) {
+                    $displayValue = sprintf('%d:%02d:%02d', $hours, $minutes, $seconds);
+                } else {
+                    $displayValue = sprintf('%d:%02d', $minutes, $seconds);
+                }
+            }
             echo <<<EOF
 
-                    $date: {$this->ansi->bold()->text(strval($count))->reset()->get()}
+                    $date: {$this->ansi->bold()->text(strval($displayValue))->reset()->get()}
             EOF;
         }
         echo PHP_EOL . '*-------------------------*' . PHP_EOL;

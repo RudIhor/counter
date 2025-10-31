@@ -25,6 +25,13 @@ final class Today implements CountByTime
 
     public function getCount(array $logs): int
     {
+        // Check if this is time data
+        if (isset($logs['time']) && is_array($logs['time'])) {
+            /** @var int $seconds */
+            $seconds = $logs['time'][$this->date->format('Y-m-d')] ?? 0;
+            return $seconds;
+        }
+
         /** @var int $count */
         $count = $logs[$this->date->format('Y-m-d')] ?? 0;
 
