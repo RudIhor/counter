@@ -6,6 +6,7 @@ namespace Ihorrud\Counter\Entities;
 
 use Ihorrud\Counter\ValueObjects\Count;
 use Ihorrud\Counter\ValueObjects\Tag;
+use Ihorrud\Counter\ValueObjects\Time;
 use DateTimeImmutable;
 
 final readonly class Log
@@ -14,6 +15,7 @@ final readonly class Log
         private Tag               $tag,
         private Count             $count,
         private DateTimeImmutable $createdAt,
+        private ?Time             $time = null,
     ) {
     }
 
@@ -30,5 +32,15 @@ final readonly class Log
     public function createdAt(): string
     {
         return $this->createdAt->format('Y-m-d');
+    }
+
+    public function time(): ?Time
+    {
+        return $this->time;
+    }
+
+    public function hasTime(): bool
+    {
+        return $this->time !== null;
     }
 }

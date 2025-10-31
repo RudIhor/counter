@@ -25,10 +25,23 @@ final class LastMonth implements CountByTime
 
     public function getCount(array $logs): int
     {
+        // Check if this is time data
+        if (isset($logs['time']) && is_array($logs['time'])) {
+            $timeLogs = $logs['time'];
+            $result = 0;
+            $date = clone $this->date;
+            while ($date < new DateTimeImmutable('first day of this month')) {
+                $result += $timeLogs[$date->format('Y-m-d')] ?? 0;
+                $date = $date->modify('+1 day');
+            }
+            return $result;
+        }
+
         $result = 0;
-        while ($this->date < new DateTimeImmutable('first day of this month')) {
-            $result += $logs[$this->date->format('Y-m-d')] ?? 0;
-            $this->date = $this->date->modify('+1 day');
+        $date = clone $this->date;
+        while ($date < new DateTimeImmutable('first day of this month')) {
+            $result += $logs[$date->format('Y-m-d')] ?? 0;
+            $date = $date->modify('+1 day');
         }
 
         return $result;
